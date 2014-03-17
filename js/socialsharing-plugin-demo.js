@@ -12,10 +12,10 @@ function socialsharingDemo() {
       // alternative usage:
 
       // 1) a local image from anywhere else (if permitted):
-      // window.plugins.socialsharing.share('Some text', 'http://domain.com', '/Users/username/Library/Application Support/iPhone/6.1/Applications/25A1E7CF-079F-438D-823B-55C6F8CD2DC0/Documents/.nl.x-services.appname/pics/img.jpg');
+       window.plugins.socialsharing.share('Some text',  'http://www.barcelonabeerfestival.com', 'http://www.barcelonabeerfestival.com/imatges2014/logo2014.png');
 
       // 2) an image from the internet:
-     window.plugins.socialsharing.share('Some text', 'Some subject', 'http://www.barcelonabeerfestival.com', 'http://www.barcelonabeerfestival.com/imatges2014/logo2014.png');
+     //window.plugins.socialsharing.share('Some text', 'Some subject', 'http://www.barcelonabeerfestival.com', 'http://www.barcelonabeerfestival.com/imatges2014/logo2014.png');
 
       // 3) text and link:
 //      window.plugins.socialsharing.share('Some text and a link', '', '', 'http://www.nu.nl');
