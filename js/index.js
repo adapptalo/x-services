@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+  var app = new kendo.mobile.Application(document.body);
 app = {
   // Application Constructor
   initialize: function () {
