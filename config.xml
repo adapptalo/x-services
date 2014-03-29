@@ -31,10 +31,10 @@
     <gap:plugin name="org.apache.cordova.dialogs" version="0.2.2" />
 
 
-        <preference name="permissions" value="none" />
-    <preference name="orientation" value="default" />
+    <preference name="phonegap-version" value="3.3.0"/>
+    <preference name="orientation" value="portrait" />
     <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="true" />
+    <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="true" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
@@ -44,8 +44,9 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="8" />
     <preference name="android-installLocation" value="auto" />
+    <preference name="SplashScreenDelay" value="2000" />
 
     <!-- demo for the new deployment target preference (iOS only) -->
     <preference name="deployment-target" value="6.0" />
