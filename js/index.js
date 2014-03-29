@@ -39,6 +39,9 @@ var app = {
   onDeviceReady: function () {
     app.receivedEvent('deviceready');
     app.initPluginDemo();
+    app.startWatch();
+    var watchHeadingID = null;
+    var watchPositionID = null;
   },
   // Update DOM on a Received Event
   receivedEvent: function (id) {
@@ -51,6 +54,36 @@ var app = {
 
     console.log('Received Event: ' + id);
   },
+    startWatch: function(){
+         // Update compass every 3 seconds
+        var options = { frequency: 1000 };
+
+        watchHeadingID = navigator.compass.watchHeading(onHeadingSuccess, onHeadingError, options);
+        watchPositionID = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError, options);
+    },
+    stopWatch: function(){
+        if (watchPositionID) {
+            navigator.geolocation.clearPosition(watchPositionID);
+            watchPositionID = null;
+        }
+    },
+   onHeadingSuccess: function(){
+       document.getElementById('heading').innerHTML = heading;
+   },
+   onHeadingError: function(){
+       alert('onHeadingError!');
+   },
+   onPositionSuccess:function(position){
+       alert(
+'Latitude: ' + position.coords.latitude + '<br />' +
+'Longitude: ' + position.coords.longitude + '<br />' +
+'Altitude: ' + position.coords.altitude + '<br />' +
+'Accuracy: ' + position.coords.accuracy + '<br />' +
+'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
+'Heading: ' + position.coords.heading + '<br />' +
+'Speed: ' + position.coords.speed + '<br />' +
+'Timestamp: ' + new Date(position.timestamp) + '<br />');
+   },
   initPluginDemo: function () {
     document.getElementById('pluginsDemoDiv').setAttribute('style', 'display:block');
   }
