@@ -23,7 +23,7 @@ var app = {
     
     app.resizeMap();
 		
-    var map = L.map('map-canvas').setView([45.423, -75.679], 13);
+    var map = L.map('map-canvas').setView([41.375553,2.149284], 15);
 		
     //this works, but is online:
     /*
@@ -33,13 +33,24 @@ var app = {
     */
 
     //TODO build something to fall back to web if not found.
-    L.tileLayer('img/mapTiles/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 17
     }).addTo(map);
 
 
-    L.marker([45.423, -75.679]).addTo(map)
-            .bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+    var greenIcon = L.icon({
+        iconUrl: 'img/iconBBF.png',
+        //shadowUrl: 'leaf-shadow.png',
+        iconSize:     [75, 75], // size of the icon
+        //shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [35, 75], // point of the icon which will correspond to marker's location
+        //shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    L.marker([41.375553,2.149284], {icon: greenIcon}).addTo(map)
+                .bindPopup("<b>Barcelona Beer Festival</b><br />8, 9 y 10 de Marzo.").openPopup();
+    /*L.marker([45.423, -75.679]).addTo(map)
+            .bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();*/
 
     var popup = L.popup();
 
@@ -51,6 +62,21 @@ var app = {
     }
 
     map.on('click', onMapClick);
+    function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+
+            L.marker(e.latlng).addTo(map)
+                    .bindPopup("Usted está alrededor de " + radius + " metros de este punto").openPopup();
+
+            L.circle(e.latlng, radius).addTo(map);
+    }
+
+    function onLocationError(e) {
+            alert(e.message);
+    }
+    map.on('locationfound', onLocationFound);
+    map.on('locationerror', onLocationError);
+
   },
   // Bind Event Listeners
   //
