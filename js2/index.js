@@ -16,7 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+  var app = new kendo.mobile.Application(document.body);
+app = {
   // Application Constructor
   initialize: function () {
     this.bindEvents();
@@ -63,3 +64,8 @@ function isAndroid() {
 function isIOS() {
   return navigator.userAgent.match(/(iPad|iPhone|iPod)/i) != null;
 }
+if (isIOS() || isAndroid()) {
+      document.addEventListener('deviceready', this.onDeviceReady, false);
+    } else {
+      this.onDeviceReady();
+    }
