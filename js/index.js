@@ -20,6 +20,37 @@ var app = {
   // Application Constructor
   initialize: function () {
     this.bindEvents();
+    
+    app.resizeMap();
+		
+    var map = L.map('map-canvas').setView([45.423, -75.679], 13);
+		
+    //this works, but is online:
+    /*
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+    }).addTo(map);
+    */
+
+    //TODO build something to fall back to web if not found.
+    L.tileLayer('img/mapTiles/{z}/{x}/{y}.png', {
+            maxZoom: 17
+    }).addTo(map);
+
+
+    L.marker([45.423, -75.679]).addTo(map)
+            .bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+            popup
+                    .setLatLng(e.latlng)
+                    .setContent("You clicked the map at " + e.latlng.toString())
+                    .openOn(map);
+    }
+
+    map.on('click', onMapClick);
   },
   // Bind Event Listeners
   //
@@ -39,12 +70,10 @@ var app = {
   onDeviceReady: function () {
     app.receivedEvent('deviceready');
     app.initPluginDemo();
-    app.startWatch();
-    var watchHeadingID = null;
-    var watchPositionID = null;
   },
   // Update DOM on a Received Event
   receivedEvent: function (id) {
+      alert("entra");
     var parentElement = document.getElementById(id);
     var listeningElement = parentElement.querySelector('.listening');
     var receivedElement = parentElement.querySelector('.received');
@@ -54,40 +83,18 @@ var app = {
 
     console.log('Received Event: ' + id);
   },
-    startWatch: function(){
-         // Update compass every 3 seconds
-        var options = { frequency: 1000 };
-
-        watchHeadingID = navigator.compass.watchHeading(onHeadingSuccess, onHeadingError, options);
-        watchPositionID = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError, options);
-    },
-    stopWatch: function(){
-        if (watchPositionID) {
-            navigator.geolocation.clearPosition(watchPositionID);
-            watchPositionID = null;
-        }
-    },
-   onHeadingSuccess: function(){
-       document.getElementById('heading').innerHTML = heading;
-   },
-   onHeadingError: function(){
-       alert('onHeadingError!');
-   },
-   onPositionSuccess:function(position){
-       alert(
-'Latitude: ' + position.coords.latitude + '<br />' +
-'Longitude: ' + position.coords.longitude + '<br />' +
-'Altitude: ' + position.coords.altitude + '<br />' +
-'Accuracy: ' + position.coords.accuracy + '<br />' +
-'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
-'Heading: ' + position.coords.heading + '<br />' +
-'Speed: ' + position.coords.speed + '<br />' +
-'Timestamp: ' + new Date(position.timestamp) + '<br />');
-   },
   initPluginDemo: function () {
     document.getElementById('pluginsDemoDiv').setAttribute('style', 'display:block');
-  }
+  },
+    resizeMap: function() {
+             $("#map-canvas").height(Math.max(100,$(window).height()-90));// TODO set 
+    }
 };
+
+
+        $(window).resize(function() {
+                app.resizeMap();
+        });
 
 function isAndroid() {
   return navigator.userAgent.toLowerCase().indexOf("android") > -1;
